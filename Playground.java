@@ -66,7 +66,7 @@ public class Playground {
         System.out.print("\n");
     }
 
-    public void checkVictory(Player player, Computer computer) {
+    public void checkVictoryDiagonally() {
         boolean victory = true;
         char play = playground[0][0];
         for (int i = 0; i < size; i++) {
@@ -94,7 +94,11 @@ public class Playground {
         if (victory && play != 0) {
             exitTheGame(play);
         }
-        //------------------------------------------------------
+    }
+
+    public void checkVictoryFromTopToDown() {
+        boolean victory = true;
+        char play;
         for (int i = 0; i < size; i++) {
             victory = true;
             play = playground[i][0];
@@ -110,13 +114,17 @@ public class Playground {
                 exitTheGame(play);
             }
         }
-        //------------------------------------------------------
+    }
+
+    public void checkVictoryFromLeftToRight() {
+        boolean victory = true;
+        char play;
         for (int i = 0; i < size; i++) {
             victory = true;
             play = playground[0][i];
-            for (int j = 0; j < size; j++) {
+            for (int jindex = 0; jindex < size; jindex++) {
                 if (victory) {
-                    if (playground[j][i] != play) {
+                    if (playground[jindex][i] != play) {
                         victory = false;
                         break;
                     }
@@ -126,11 +134,18 @@ public class Playground {
                 exitTheGame(play);
             }
         }
-
     }
 
     public void exitTheGame(char play) {
         System.out.println("Winner " + play);
         System.exit(0);
     }
+
+    public void checkVictory(Player player, Computer computer) {
+        checkVictoryDiagonally();
+        checkVictoryFromTopToDown();
+        checkVictoryFromLeftToRight();
+    }
+
+
 }
