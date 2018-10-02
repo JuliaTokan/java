@@ -11,6 +11,7 @@ public class StudentsList {
         list[num] = s;
         num++;
     }
+
     public Student getStudent(int n) {
         return list[n];
     }
@@ -27,7 +28,7 @@ public class StudentsList {
         return -1;
     }
     //---------------------------------------------------- Домашняя работа
-    
+
     public int findStudentBySurname(String surname) {
         for(int index = 0; index < num; index++)
         {
@@ -38,6 +39,7 @@ public class StudentsList {
         }
         return -1;
     }
+
     public int findStudentByBirth(Date date) {
         for(int index = 0; index < num; index++)
         {
@@ -48,13 +50,14 @@ public class StudentsList {
         }
         return -1;
     }
+
     public int[] findStudentsByName(String name){
-        int num = getNum();
         int[] searchList = new int[num];
         int indexList = 0;
-        for (int index = 0; index < num; index++) {
+        for (int index = 1; index < num; index++) {
             Student student = list[index];
             String studentName = student.getName();
+            System.out.println(studentName);
             if (studentName.equalsIgnoreCase(name)) {
                 searchList[indexList] = index;
                 indexList++;
@@ -62,20 +65,21 @@ public class StudentsList {
         }
         return Arrays.copyOfRange(searchList, 0, indexList);
     }
+
     public int[] findStudentsBySurname(String surname){
-        int num = getNum();
         int[] searchList = new int[num];
         int indexList = 0;
         for (int index = 0; index < num; index++) {
-            Student student = list[index];
-            String studentName = student.getSurname();
-            if (studentName.equalsIgnoreCase(surname)) {
+            Student student = getStudent(index);
+            String studentSurname = student.getSurname();
+            if (studentSurname.equalsIgnoreCase(surname)) {
                 searchList[indexList] = index;
                 indexList++;
             }
         }
         return Arrays.copyOfRange(searchList, 0, indexList);
     }
+
     public int[] findStudentsByBirth(Date date){
         int num = getNum();
         int[] searchList = new int[num];
@@ -89,5 +93,17 @@ public class StudentsList {
             }
         }
         return Arrays.copyOfRange(searchList, 0, indexList);
+    }
+
+    public void addMoreThan100(Student student) {
+        if(num<3)
+            add(student);
+        else {
+            Student[] studentsList = list.clone();
+            list = new Student[num+1];
+            System.arraycopy(studentsList, 0, list, 0, num);
+            list[num] = student;
+            num++;
+        }
     }
 }
