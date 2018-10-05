@@ -7,11 +7,6 @@ public class StudentsList {
     private Student[] list = new Student[100];
     private int num = 0;
 
-    public void add(Student s) {
-        list[num] = s;
-        num++;
-    }
-
     public Student getStudent(int n) {
         return list[n];
     }
@@ -95,15 +90,10 @@ public class StudentsList {
         return Arrays.copyOfRange(searchList, 0, indexList);
     }
 
-    public void addMoreThan100(Student student) {
-        if(num<3)
-            add(student);
-        else {
-            Student[] studentsList = list.clone();
-            list = new Student[num+1];
-            System.arraycopy(studentsList, 0, list, 0, num);
+    public void add(Student student) {
+            list = Arrays.copyOf(list,num+1);
             list[num] = student;
             num++;
         }
     }
-}
+

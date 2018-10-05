@@ -11,16 +11,16 @@ public class Main {
         Student student4 = new Student("Yulia", "Tokan",  new Date(1984, 1, 1));
 
         StudentsList studentsList = new StudentsList();
-        studentsList.addMoreThan100(student1);
-        studentsList.addMoreThan100(student2);
-        studentsList.addMoreThan100(student3);
-        studentsList.addMoreThan100(student4);
+        studentsList.add(student1);
+        studentsList.add(student2);
+        studentsList.add(student3);
+        studentsList.add(student4);
 
         Date date =  new Date(1986, 1, 1);
 
         int slist[] = studentsList.findStudentsBySurname("Tokan");
 
-        for(int i = 0; i<slist.length; i++){
+        for(int i:slist){
             System.out.println(slist[i]);
         }
     }
