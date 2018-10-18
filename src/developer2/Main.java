@@ -7,7 +7,7 @@ public class Main {
                 new JuniorDeveloper("Mike", 500, 0),
                 new JuniorDeveloper("Dima", 500, 1),
                 new MiddleDeveloper("Vova", 500, 3),
-                new SeniorDeveloper("Jack", 500, 5),
+                new SeniorDeveloper("Jack", 700, 5),
                 new TeamLeadDeveloper("Robby", 500, 7)
         };
         StringBuilder sb;
