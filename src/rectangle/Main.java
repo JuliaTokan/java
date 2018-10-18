@@ -21,14 +21,14 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter width:");
         int width = scanner.nextInt();
-        return width;
+        return width-1;
     }
 
     public static int enterHeight() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter height:");
         int height = scanner.nextInt();
-        return height;
+        return height-1;
     }
 
     public static boolean checkSize(int width, int height) {
