@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class TestRead {
     public static void main(String[] args) {
-        File file = new File("/Users/yulia/Documents/test1.txt");
+        File file = new File("/Users/yulia/Documents/test.txt");
         HumanDAO humanDAO = new HumanDAO(file);
         try {
             humanDAO.read();

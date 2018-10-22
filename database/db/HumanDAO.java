@@ -46,15 +46,15 @@ public class HumanDAO {
     }
 
     public void read() throws IOException {
-        try (FileInputStream readIn = new FileInputStream(file);
-             DataInputStream in = new DataInputStream(readIn)
+        try (RandomAccessFile in = new RandomAccessFile(file, "r");
         ) {
             try {
                 byte[] buff = new byte[50];
                 byte[] buffDate = new byte[8];
-                byte[] buffDouble = new byte[8];
                 int read = 0;
+                int seek = 0;
                 do {
+                    in.seek(seek);
                     read = in.read(buff, 0, buff.length);
                     System.out.println(new String(buff, "UTF-8").trim());
 
@@ -74,13 +74,13 @@ public class HumanDAO {
 
                     int delete = in.readInt();
                     System.out.println(delete);
+                    seek += 220;
                 }
-                while (read > 0 && in.available() > 0);
+                while (read > 0 && seek < in.length());
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
                 in.close();
-                readIn.close();
             }
         }
     }

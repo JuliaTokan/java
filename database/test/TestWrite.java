@@ -13,7 +13,7 @@ public class TestWrite {
                 1000);
         Human human2 = new Human("Yuli", "Tokan", new Date(99, 8, 23), "Team Lead",
                 1000);
-        File file = new File("/Users/yulia/Documents/test1.txt");
+        File file = new File("/Users/yulia/Documents/test.txt");
         HumanDAO humanDAO = new HumanDAO(file);
         try {
             humanDAO.write(human1);
