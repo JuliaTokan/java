@@ -4,6 +4,8 @@ import human.Human;
 
 import java.io.*;
 import java.text.*;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class HumanDAO {
     private File file;
@@ -15,74 +17,74 @@ public class HumanDAO {
     public void write(Human human) throws IOException {
         validate(human);
 
-        try (OutputStream out = new FileOutputStream(file, true);
-             DataOutputStream writer = new DataOutputStream(out)
-        ) {
-            try {
-                String name = padString(human.getName(), 50);
-                writer.writeBytes(name);
+        OutputStream out = new FileOutputStream(file, true);
+        DataOutputStream writer = new DataOutputStream(out);
+        try {
+            String name = padString(human.getName(), 50);
+            writer.writeBytes(name);
 
-                String surName = padString(human.getSurName(), 50);
-                writer.writeBytes(surName);
+            String surName = padString(human.getSurName(), 50);
+            writer.writeBytes(surName);
 
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-                String date = formatter.format(human.getDate());
-                writer.writeBytes(date);
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+            String date = formatter.format(human.getDate());
+            writer.writeBytes(date);
 
-                String position = padString(human.getPosition(), 100);
-                writer.writeBytes(position);
+            String position = padString(human.getPosition(), 100);
+            writer.writeBytes(position);
 
-                writer.writeDouble(human.getSalary());
+            writer.writeDouble(human.getSalary());
 
-                writer.writeInt(0);
+            writer.writeBoolean(false);
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                writer.close();
-                out.close();
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            writer.close();
+            out.close();
         }
     }
 
-    public void read() throws IOException {
-        try (RandomAccessFile in = new RandomAccessFile(file, "r");
-        ) {
-            try {
-                byte[] buff = new byte[50];
-                byte[] buffDate = new byte[8];
-                int read = 0;
-                int seek = 0;
-                do {
-                    in.seek(seek);
-                    read = in.read(buff, 0, buff.length);
-                    System.out.println(new String(buff, "UTF-8").trim());
+    public ArrayList<Human> read() throws IOException {
+        ArrayList<Human> humans = new ArrayList<Human>();
 
-                    read = in.read(buff, 0, buff.length);
-                    System.out.println(new String(buff, "UTF-8").trim());
+        RandomAccessFile in = new RandomAccessFile(file, "r");
+        try {
+            byte[] buffNameOrSurName = new byte[50];
+            byte[] buffDate = new byte[8];
+            byte[] buffPosition = new byte[100];
+            int seek = 0;
+            do {
+                in.seek(seek);
+                in.read(buffNameOrSurName, 0, buffNameOrSurName.length);
+                String name = new String(buffNameOrSurName, "UTF-8").trim();
 
-                    read = in.read(buffDate, 0, buffDate.length);
-                    System.out.println(new String(buffDate, "UTF-8").trim());
+                in.read(buffNameOrSurName, 0, buffNameOrSurName.length);
+                String surName = new String(buffNameOrSurName, "UTF-8").trim();
 
-                    read = in.read(buff, 0, buff.length);
-                    System.out.print(new String(buff, "UTF-8").trim());
-                    read = in.read(buff, 0, buff.length);
-                    System.out.println(new String(buff, "UTF-8").trim());
+                in.read(buffDate, 0, buffDate.length);
+                String strDate = new String(buffDate, "UTF-8").trim();
+                Date date = parseToDate(strDate);
 
-                    double salary = in.readDouble();
-                    System.out.println(salary);
+                in.read(buffPosition, 0, buffPosition.length);
+                String position = new String(buffPosition, "UTF-8").trim();
 
-                    int delete = in.readInt();
-                    System.out.println(delete);
-                    seek += 220;
-                }
-                while (read > 0 && seek < in.length());
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                in.close();
+                double salary = in.readDouble();
+
+                boolean delete = in.readBoolean();
+
+                Human human = new Human(name, surName, date, position, salary);
+                humans.add(human);
+
+                seek += 217;
             }
+            while (seek < in.length());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            in.close();
         }
+        return humans;
     }
 
     public void validate(Human human) throws IOException {
@@ -105,5 +107,15 @@ public class HumanDAO {
         return str;
     }
 
+    public Date parseToDate(String str){
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        Date date = new Date();
+        try {
+            date = format.parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
 
 }
