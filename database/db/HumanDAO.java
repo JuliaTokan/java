@@ -35,7 +35,8 @@ public class HumanDAO {
 
             writer.writeDouble(human.getSalary());
 
-            writer.writeBoolean(false);
+            byte delete = 0;
+            writer.writeByte(delete);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -71,7 +72,7 @@ public class HumanDAO {
 
                 double salary = in.readDouble();
 
-                boolean delete = in.readBoolean();
+                byte delete = in.readByte();
 
                 Human human = new Human(name, surName, date, position, salary);
                 humans.add(human);
