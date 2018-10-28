@@ -21,36 +21,36 @@ public class Human {
         return name;
     }
 
-    public String getSurName() {
-        return surName;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public double getSalary() {
-        return salary;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSurName() {
+        return surName;
     }
 
     public void setSurName(String surName) {
         this.surName = surName;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
     public void setDate(Date date) {
         this.date = date;
     }
 
+    public String getPosition() {
+        return position;
+    }
+
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    public double getSalary() {
+        return salary;
     }
 
     public void setSalary(double salary) {
